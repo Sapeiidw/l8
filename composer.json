@@ -1,0 +1,10 @@
+{
+    "require": {
+        "steampixel/simple-php-router": "^0.4.1"
+    },
+    "autoload": {
+        "classmap": [
+            "Classes"
+        ]
+    }
+}

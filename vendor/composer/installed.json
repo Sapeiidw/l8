@@ -1,0 +1,37 @@
+[
+    {
+        "name": "steampixel/simple-php-router",
+        "version": "0.4.1",
+        "version_normalized": "0.4.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/steampixel/simplePHPRouter.git",
+            "reference": "19ab110e796380e88a9d15e73824976c99acb6cc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/steampixel/simplePHPRouter/zipball/19ab110e796380e88a9d15e73824976c99acb6cc",
+            "reference": "19ab110e796380e88a9d15e73824976c99acb6cc",
+            "shasum": ""
+        },
+        "time": "2020-05-15T10:09:41+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Steampixel": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "SteamPixel",
+                "email": "info@steampixel.de"
+            }
+        ],
+        "description": "This is a simple and small PHP router that can handel the whole url routing for your project."
+    }
+]
