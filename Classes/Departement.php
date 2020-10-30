@@ -12,7 +12,10 @@ class Departement extends Controller
     {
         return Controller::view("departement/index",Database::get(self::$table));
     }
-
+    public static function getForProdi()
+    {
+        return Database::get(self::$table);
+    }
     public static function profile($id)
     {
         $column = "*";

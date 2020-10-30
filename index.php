@@ -22,6 +22,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Use this namespace
 use Classes\Auth;
+use Classes\Prodi;
 use Classes\Users;
 use Steampixel\Route;
 use Classes\Departement;
@@ -101,6 +102,30 @@ Route::add('/departement/([0-9]*)/edit', function($id) {
   }
   },["get","post"]);  
 
+// departement
+Route::add('/prodi', function() { Prodi::index();});
+Route::add('/prodi/create', function() {
+  Prodi::create();
+  if (!empty($_POST['id_departement']) && !empty($_POST['name'])) {
+    $data = [
+    "id_departement" => $_POST['id_departement'],
+    "name" => $_POST['name'],
+    ];
+    Prodi::store($data);
+  }
+  },["get","post"]);
+Route::add('/prodi/([0-9]*)', function($id) { Prodi::profile($id); });
+Route::add('/prodi/([0-9]*)/delete', function($id) { Prodi::destroy($id); });
+Route::add('/prodi/([0-9]*)/edit', function($id) {  
+  Prodi::edit($id);
+  if (!empty($_POST['id_departement']) && !empty($_POST['name']) ) {
+    $data = [
+        'id_departement' => $_POST['id_departement'],
+        'name' => $_POST['name'],
+    ];
+    Prodi::update($data,$_POST['id']);
+  }
+  },["get","post"]);  
 
 // Run the Router with the given Basepath
 Route::run(BASEPATH);
