@@ -14,28 +14,15 @@
 
             <tbody>
                 <?php
-                    $rules = [
-                        "table1" => "prodies",
-                        "key1" => "id_departement",
-                        "table2" => "departements",
-                        "key2" => "id",
-                        "join" => "JOIN",
-                        "condition" => "ORDER BY id",
-                        "column" => [
-                            "departements.name as jurusan",
-                            "prodies.name as prodi",
-                            "prodies.id as id",
-                        ]
-                    ];
-                    foreach ($p->index($rules) as $data) {
+                    foreach ($data as $prodi) {
                         echo '
                         <tr>
-                        <td>'.$data["id"].'</td>
-                        <td>'.$data["jurusan"].'</td>
-                        <td>'.$data["prodi"].'</td>
+                        <td>'.$prodi["id"].'</td>
+                        <td>'.$prodi["jurusan"].'</td>
+                        <td>'.$prodi["prodi"].'</td>
                         <td>
-                            <a href="index.php?f=prodi&&action=edit&&param='.$data['id'].'" class="btn btn-sm btn-primary">edit</a>
-                            <a href="index.php?f=prodi&&action=delete&&param='.$data['id'].'" class="btn btn-sm btn-danger">delete</a>
+                            <a href="'.BASEPATH."prodi/".$prodi['id'].'/edit" class="btn btn-sm btn-primary">edit</a>
+                            <a href="'.BASEPATH."prodi/".$prodi['id'].'/delete" class="btn btn-sm btn-danger">delete</a>
                         </td>
                         </tr>
                         ';

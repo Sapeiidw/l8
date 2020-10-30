@@ -24,6 +24,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Classes\Auth;
 use Classes\Users;
 use Steampixel\Route;
+use Classes\Departement;
 
 // Define a global basepath
 define('BASEPATH','/pabw-oop/');
@@ -75,8 +76,33 @@ Route::add('/user/([0-9]*)/edit', function($id) {
   }
   },["get","post"]);  
 
-// mimpi
-  // Run the Router with the given Basepath
+// departement
+Route::add('/departement', function() { Departement::index();});
+Route::add('/departement/create', function() {
+  Departement::create();
+  if (!empty($_POST['name']) && !empty($_POST['kode'])) {
+    $data = [
+    "name" => $_POST['name'],
+    "kode" => $_POST['kode'],
+    ];
+    Departement::store($data);
+  }
+  },["get","post"]);
+Route::add('/departement/([0-9]*)', function($id) { Departement::profile($id); });
+Route::add('/departement/([0-9]*)/delete', function($id) { Departement::destroy($id); });
+Route::add('/departement/([0-9]*)/edit', function($id) {  
+  Departement::edit($id);
+  if (!empty($_POST['name']) && !empty($_POST['kode'])) {
+    $data = [
+    "name" => $_POST['name'],
+    "kode" => $_POST['kode'],
+    ];
+    Departement::update($data,$_POST['id']);
+  }
+  },["get","post"]);  
+
+
+// Run the Router with the given Basepath
 Route::run(BASEPATH);
 
 ?>
