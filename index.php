@@ -44,8 +44,7 @@ Route::add('/user/(.*)/delete',[Users::destroy($id)]);
 // Add base route (startpage)
 Route::add('/', function() {
   navi();
-  Users::index();
-  // Database::tolong();
+  Users::index();  
 });
 
 // Another base route example
