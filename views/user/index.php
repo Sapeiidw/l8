@@ -8,15 +8,15 @@
 
     <tbody>
         <?php
-            foreach ($u->index() as $data) {
+            foreach ($data as $user) {
                 echo '
                 <tr>
-                <td>'.$data["id"].'</td>
-                <td>'.$data["username"].'</td>
-                <td>'.$data["email"].'</td>
+                <td>'.$user["id"].'</td>
+                <td>'.$user["username"].'</td>
+                <td>'.$user["email"].'</td>
                 <td>
-                    <a href="index.php?f=user&&edit='.$data['id'].'" class="btn btn-sm btn-primary">edit</a>
-                    <a href="index.php?f=user&&delete='.$data['id'].'" class="btn btn-sm btn-danger">delete</a>
+                    <a href="/pabw-oop/user/'.$user['id'].'/edit" class="btn btn-sm btn-primary">edit</a>
+                    <a href="/pabw-oop/user/'.$user['id'].'/delete" class="btn btn-sm btn-danger">delete</a>
                 </td>
                 </tr>
                 ';

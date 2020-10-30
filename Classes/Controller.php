@@ -6,13 +6,20 @@ use Classes\Database;
 
 class Controller extends Database
 {
-    public static function view($page,$data =[])
+    public static function view($page,$data=[])
     {
-        include_once "views/" . $page . ".php";
+        // Check for view file
+        if(file_exists('views/' . $page . '.php')){
+            require_once 'views/' . $page . '.php';
+        } else {
+            // View does not exist
+            die('View does not exist');
+        }
     }
 
     public static function redirect($page,$data =[])
     {
-        header("location : . $page .");
+        $data;
+        header("location : /pabw-oop. $page .");
     }
 }

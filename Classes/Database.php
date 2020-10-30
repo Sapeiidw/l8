@@ -17,7 +17,14 @@ class Database
         $sql = "SELECT $column FROM $table $condition";
         $stmt = self::__consturct()->query($sql);
         $stmt->execute();
+        $count = $stmt->rowCount();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        if ($count > 0) {
+            return $stmt;
+        } else {
+            return false;
+        }
+        
         return $stmt;
     }
     
@@ -32,14 +39,14 @@ class Database
         $stmt->execute();
         return $sql;
     }
-    public static function put($table,$data,$by)
+    public static function put($table,$data,$condition)
     {
         $valueSets = array();
         foreach($data as $key => $value) {
             $valueSets[] = $key . " = '" . $value . "'";
         }
 
-        $sql = "UPDATE $table SET ". join(",",$valueSets) . " WHERE $by[0] = '$by[1]' ";
+        $sql = "UPDATE $table SET ". join(",",$valueSets) ." ". $condition ."";
         $stmt = self::__consturct()->prepare($sql);
         $stmt->execute();
         return $stmt;

@@ -1,175 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+  <!-- jQuery and JS bundle w/ Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <title>Document</title>
+</head>
+<body>
+  
 <?php
 
+session_start();
+include_once 'views/components/navbar.component.php';
 // Autoload files using composer
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Use this namespace
-
-include_once 'UserController.php';
-
-use Steampixel\Route;
+use Classes\Auth;
 use Classes\Users;
+use Steampixel\Route;
 
 // Define a global basepath
 define('BASEPATH','/pabw-oop/');
 
-// If your script lives in a subfolder you can use the following example
-// Do not forget to edit the basepath in .htaccess if you are on apache
-// define('BASEPATH','/api/v1');
+Route::add('/',function() {include_once 'views/index.php';});
+// auth
+Route::add('/register', function() {
+  Users::register();
+  if (!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+    $data = [
+        'username' => $_POST['username'],
+        'email' => $_POST['email'],
+        'password' => $_POST['password']
+    ];
+    Users::create($data);
+  }
+  },["get","post"]);
+Route::add('/login', function() {
+  Auth::login();
+  if (!empty($_POST['email']) && !empty($_POST['password'])) {
+    $data = [
+        'email' => $_POST['email'],
+        'password' => $_POST['password']
+    ];
+    $login = Users::login($data);
+    if ($login) {
+      // Auth::MakeSession($login);
+      print_r($login);
+    }else {
+      die("wrong email or password!!");
+    }
+  }
+  },["get","post"]);
 
-function navi() {
-  echo '
-  Navigation:
-  <ul>
-      <li><a href="'.BASEPATH.'">home</a></li>
-      <li><a href="'.BASEPATH.'index.php">index.php</a></li>
-      <li><a href="'.BASEPATH.'user/3/edit">edit user 3</a></li>
-      <li><a href="'.BASEPATH.'user/3/delete">delete user 3</a></li>
-      <li><a href="'.BASEPATH.'foo/5/bar">foo 5 bar</a></li>
-      <li><a href="'.BASEPATH.'foo/bar/foo/bar">long route example</a></li>
-      <li><a href="'.BASEPATH.'contact-form">contact form</a></li>
-      <li><a href="'.BASEPATH.'get-post-sample">get+post example</a></li>
-      <li><a href="'.BASEPATH.'test.html">test.html</a></li>
-      <li><a href="'.BASEPATH.'phpinfo">PHP Info</a></li>
-      <li><a href="'.BASEPATH.'aTrailingSlashDoesNotMatter">aTrailingSlashDoesNotMatter</a></li>
-      <li><a href="'.BASEPATH.'aTrailingSlashDoesNotMatter/">aTrailingSlashDoesNotMatter/</a></li>
-      <li><a href="'.BASEPATH.'theCaseDoesNotMatter">theCaseDoesNotMatter</a></li>
-      <li><a href="'.BASEPATH.'thecasedoesnotmatter">thecasedoesnotmatter</a></li>
-      <li><a href="'.BASEPATH.'this-route-is-not-defined">404 Test</a></li>
-      <li><a href="'.BASEPATH.'this-route-is-defined">405 Test</a></li>
-  </ul>
-  ';
-}
-Route::add('/user/(.*)/delete',[Users::destroy($id)]);
-// Add base route (startpage)
-Route::add('/', function() {
-  navi();
-  Users::index();  
-});
+Route::add('/logout', function() { $user = Auth::logout();});
+// user
+Route::add('/user', function() { $user = Users::index();});
+Route::add('/user/([0-9]*)', function($id) { $user = Users::profile($id); });
+Route::add('/user/([0-9]*)/delete', function($id) { $user = Users::destroy($id); });
+Route::add('/user/([0-9]*)/edit', function($id) {  
+  $user = Users::edit($id);
+  if (!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+    $data = [
+        'username' => $_POST['username'],
+        'email' => $_POST['email'],
+        'password' => $_POST['password']
+    ];
+    Users::update($data,$_POST['id']);
+  }
+  },["get","post"]);  
 
-// Another base route example
-Route::add('/index.php', function() {
-  navi();
-  echo 'You are not really on index.php ;-)';
-});
-
-// Simple test route that simulates static html file
-// TODO: Fix this for some web servers
-Route::add('/test.html', function() {
-  navi();
-  echo 'Hello from test.html';
-});
-
-// This route is for debugging only
-// It simply prints out some php infos
-// Do not use this route on production systems!
-Route::add('/phpinfo', function() {
-  navi();
-  phpinfo();
-});
-
-// Post route example
-Route::add('/contact-form', function() {
-  navi();
-  echo '<form method="post"><input type="text" name="test"><input type="submit" value="send"></form>';
-}, 'get');
-
-// Post route example
-Route::add('/contact-form', function() {
-  navi();
-  echo 'Hey! The form has been sent:<br>';
-  print_r($_POST);
-}, 'post');
-
-// Get and Post route example
-Route::add('/get-post-sample', function() {
-  navi();
-	echo 'You can GET this page and also POST this form back to it';
-  echo '
-  <form method="post">
-    <input type="text" name="username">
-    <input type="email" name="email">
-    <input type="password" name="password">
-    <button type="submit">Submit</button>
-  </form>
-  ';
-	if (isset($_POST['username'])) {
-		echo 'I also received a POST with this data:<br>';
-    print_r($_POST);
-    Users::create($_POST);
-	}
-}, ['get','post']);
-
-// Route with regexp parameter
-// Be aware that (.*) will match / (slash) too. For example: /user/foo/bar/edit
-// Also users could inject SQL statements or other untrusted data if you use (.*)
-// You should better use a saver expression like /user/([0-9]*)/edit or /user/([A-Za-z]*)/edit
-Route::add('/user/(.*)/edit', function($id) {
-  navi();
-  echo 'View user with id '.$id.'<br>';
-  Users::profile($id);
-});
-
-// Accept only numbers as parameter. Other characters will result in a 404 error
-Route::add('/foo/([0-9]*)/bar', function($var1) {
-  navi();
-  echo $var1.' is a great number!';
-});
-
-// Crazy route with parameters
-Route::add('/(.*)/(.*)/(.*)/(.*)', function($var1,$var2,$var3,$var4) {
-  navi();
-  echo 'This is the first match: '.$var1.' / '.$var2.' / '.$var3.' / '.$var4.'<br>';
-});
-
-// Long route example
-// By default this route gets never triggered because the route before matches too
-Route::add('/foo/bar/foo/bar', function() {
-  echo 'This is the second match (This route should only work in multi match mode) <br>';
-});
-
-// Trailing slash example
-Route::add('/aTrailingSlashDoesNotMatter', function() {
-  navi();
-  echo 'a trailing slash does not matter<br>';
-});
-
-// Case example
-Route::add('/theCaseDoesNotMatter',function() {
-  navi();
-  echo 'the case does not matter<br>';
-});
-
-// 405 test
-Route::add('/this-route-is-defined', function() {
-  navi();
-  echo 'You need to patch this route to see this content';
-}, 'patch');
-
-// Add a 404 not found route
-Route::pathNotFound(function($path) {
-  // Do not forget to send a status header back to the client
-  // The router will not send any headers by default
-  // So you will have the full flexibility to handle this case
-  header('HTTP/1.0 404 Not Found');
-  navi();
-  echo 'Error 404 :-(<br>';
-  echo 'The requested path "'.$path.'" was not found!';
-});
-
-// Add a 405 method not allowed route
-Route::methodNotAllowed(function($path, $method) {
-  // Do not forget to send a status header back to the client
-  // The router will not send any headers by default
-  // So you will have the full flexibility to handle this case
-  header('HTTP/1.0 405 Method Not Allowed');
-  navi();
-  echo 'Error 405 :-(<br>';
-  echo 'The requested path "'.$path.'" exists. But the request method "'.$method.'" is not allowed on this path!';
-});
-
-// Run the Router with the given Basepath
+// mimpi
+  // Run the Router with the given Basepath
 Route::run(BASEPATH);
 
-// Enable case sensitive mode, trailing slashes and multi match mode by setting the params to true
-// Route::run(BASEPATH, true, true, true);
+?>
+
+</body>
+</html>
+

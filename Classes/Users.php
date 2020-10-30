@@ -10,38 +10,61 @@ class Users extends Controller
 
     public static function index()
     {
-        $get = Database::get(self::$table);
-        foreach ($get as $data) {
-            print_r($data);
-        }
-        // return Controller::view("user/index",$data);
+        return Controller::view("user/index",Database::get(self::$table));
     }
 
     public static function profile($id)
     {
         $column = "*";
         $condition = "WHERE id = ".$id;
-        $get = Database::get(self::$table,$column,$condition);
-        foreach ($get as $data) {
-            print_r($data);
-        }
+        return Controller::view("user/index",Database::get(self::$table,$column,$condition));
     }
-
+    public static function login($data)
+    {
+        $email = $data['email'];
+        $password = $data['password'];
+        $conditioin = "WHERE email = '$email' and password = '$password' ";
+        $query = Database::get("users","*",$conditioin);
+        if (!$query) {
+            die("The data not found");
+        } else {
+            foreach ($query as $data) {
+                $_SESSION['id'] = $data['id'];
+                $_SESSION['username'] = $data['username'];
+                $_SESSION['email'] = $data['email'];
+                $_SESSION['role'] = $data['role'];
+            }
+            return $query;
+        }
+        
+    }
+    public static function register()
+    {
+        return Controller::view("user/create");
+    }
     public static function create($data)
     {
-        Database::insert(self::$table, $data);
-        header("location: index.php");
+        return Database::insert(self::$table, $data);
+    }
+
+    public static function edit($id)
+    {
+        $column = "*";
+        $condition = "WHERE id = ".$id;
+        return Controller::view("user/edit", Database::get(self::$table,$column,$condition));
+    }
+
+    public static function update($data,$id)
+    {
+        $condition = "WHERE id = ".$id."";
+        Database::put(self::$table,$data,$condition);
+        print_r(Database::put(self::$table,$data,$condition));
+        header("location: /pabw-oop/user");
     }
 
     public static function destroy($id)
     {
         Database::delete(self::$table,$id);
-        header("location: index.php");
-    }
-
-    public static function update($data,$id)
-    {
-        $condition = "WHERE id = ".$id;
-        Database::put(self::$table,$data,$condition);
+        header("location: /pabw-oop/user");
     }
 }
