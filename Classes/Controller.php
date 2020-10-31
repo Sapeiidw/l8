@@ -20,6 +20,6 @@ class Controller extends Database
     public static function redirect($page,$data =[])
     {
         $data;
-        header("Location : /pabw-oop. $page ."); exit;
+        header("Location : ".BASEPATH.". $page ."); exit;
     }
 }

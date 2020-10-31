@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-header">Edit User</div>
         <div class="card-body">
-            <form action="/pabw-oop/user/<?php echo $user['id'] ?>/edit" method="post" class="form-group">
+            <form action="<?= BASEPATH ?>user/<?php echo $user['id'] ?>/edit" method="post" class="form-group">
                 <input type="hidden" name="id" value="<?php echo $user['id'] ?>">
                 <div class="form-group">
                     <label for="username">Username</label>

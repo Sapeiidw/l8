@@ -1,7 +1,7 @@
 <?php 
     // $u = new Users;
     if (isset($_SESSION['username'])) {
-        header("location: /pabw-oop/user/".$_SESSION['id']);
+        header("location: ".BASEPATH."user/".$_SESSION['id']);
     }
 ?>
 
@@ -14,7 +14,7 @@
                 echo '<div class="alert alert-danger">'. $login["status"].'</div>';
             }
             ?> -->
-            <form action="/pabw-oop/login" method="post" class="form-group">
+            <form action="<?=BASEPATH?>login" method="post" class="form-group">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" name='email'>
