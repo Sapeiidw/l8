@@ -7,18 +7,22 @@ use Classes\Controller;
 class Assignment extends Controller
 {
     protected static $table = "assignments";
+    protected static $column = " assignments.id,assignments.id_course,assignments.name,deskripsi,assignments.deadline, courses.id_user ";
 
     public static function index($id)
     {
-        $column = " assignments.id,assignments.id_course,assignments.name,deskripsi,assignments.deadline, courses.id_user ";
         $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE assignments.id_course = ".$id;
-        return Controller::view("assignment/index",Database::get(self::$table,$column,$condition));
+        return Controller::view("assignment/index",Database::get(self::$table,self::$column,$condition));
     }
     public static function profile($id)
     {
-        $column = " assignments.id,assignments.id_course,assignments.name,deskripsi,assignments.deadline, courses.id_user ";
         $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE assignments.id = ".$id;
-        return Controller::view("assignment/single",Database::get(self::$table,$column,$condition));
+        return Controller::view("assignment/single",Database::get(self::$table,self::$column,$condition));
+    }
+    public static function getProfile($id)
+    {
+        $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE assignments.id = ".$id;
+        return Database::get(self::$table,self::$column,$condition);
     }
     public static function getForJurusan()
     {
@@ -35,9 +39,8 @@ class Assignment extends Controller
 
     public static function edit($id)
     {
-        $column = " assignments.id,assignments.id_course,assignments.name,deskripsi,assignments.deadline, courses.id_user ";
         $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE assignments.id = ".$id;
-        return Controller::view("assignment/edit", Database::get(self::$table,$column,$condition));
+        return Controller::view("assignment/edit", Database::get(self::$table,self::$column,$condition));
     }
 
     public static function update($data,$id)

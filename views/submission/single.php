@@ -23,7 +23,6 @@
                         <td>'.$assignment["deskripsi"].'</td>
                         <td>'.$assignment["deadline"].'</td>
                         <td>
-                            <a href="'.BASEPATH."assignment/".$assignment['id'].'/create" class="btn btn-sm btn-primary">add submission</a>
                             <a href="'.BASEPATH."assignment/".$assignment['id'].'/edit" class="btn btn-sm btn-primary">edit</a>
                             <a href="'.BASEPATH."assignment/".$assignment['id'].'/delete" class="btn btn-sm btn-danger">delete</a>
                         </td>

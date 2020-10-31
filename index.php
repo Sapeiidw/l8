@@ -31,6 +31,7 @@ use Classes\Course;
 use Classes\Matkul;
 use Steampixel\Route;
 use Classes\Assignment;
+use Classes\Submission;
 use Classes\Departement;
 use Classes\CourseMember;
 
@@ -298,8 +299,49 @@ Route::add('/assignment/([0-9]*)/edit', function($id) {
   } 
   },["get","post"]);  
 
+// submission
+Route::add('/assignment/([0-9]*)/create', function($id) {
+  Submission::create($id);
+  if (!empty($_POST['name']) && !empty($id) && !empty($_SESSION['id'])) {
+    $data = [
+      "id_assignment" => $id,
+      "id_user" => $_SESSION['id'],
+      "name" => $_POST['name'],
+    ];
+    Submission::store($data);
+  }else{
+    die("gk boleh kosong");
+  }
+  },["get","post"]);
+Route::add('/assignment/([0-9]*)/submission', function($id) { Submission::index($id); });
+Route::add('/submission/([0-9]*)/delete', function($id) { 
+  if(Assignment::destroy($id)){
+    Alert::deleted("course");
+    // header("Location: localhost/".BASEPATH."course");
+  };
+  });
+Route::add('/submission/([0-9]*)/edit', function($id) {  
+  Submission::edit($id);
+  if (!empty($_POST['name']) && !empty($id) && !empty($_POST['id_assignment'])) {
+    $data = [
+      "name" => $_POST['name'],
+      "status" => $_POST['status'],
+    ];
+    print_r($data);
+    if(Submission::update($data,$_POST['id'])){
+      Alert::updated("assignment/".$_POST['id_assignment']."/submission");
+      // header("Location: localhost/".BASEPATH."course");
+    } 
+    print_r(Submission::update($data,$_POST['id']));
+  }else{
+    
+    die("gk boleh kosong");
+  } 
+  },["get","post"]);  
 
-// Run the Router with the given Basepath
+
+
+  // Run the Router with the given Basepath
 Route::run(BASEPATH);
 
 ?>

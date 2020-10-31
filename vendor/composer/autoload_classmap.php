@@ -16,5 +16,6 @@ return array(
     'Classes\\Departement' => $baseDir . '/Classes/Departement.php',
     'Classes\\Matkul' => $baseDir . '/Classes/Matkul.php',
     'Classes\\Prodi' => $baseDir . '/Classes/Prodi.php',
+    'Classes\\Submission' => $baseDir . '/Classes/Submission.php',
     'Classes\\Users' => $baseDir . '/Classes/Users.php',
 );

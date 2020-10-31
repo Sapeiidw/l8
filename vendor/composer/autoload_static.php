@@ -27,6 +27,7 @@ class ComposerStaticInit48fa63fcded015e00366952f8c51ba8f
         'Classes\\Departement' => __DIR__ . '/../..' . '/Classes/Departement.php',
         'Classes\\Matkul' => __DIR__ . '/../..' . '/Classes/Matkul.php',
         'Classes\\Prodi' => __DIR__ . '/../..' . '/Classes/Prodi.php',
+        'Classes\\Submission' => __DIR__ . '/../..' . '/Classes/Submission.php',
         'Classes\\Users' => __DIR__ . '/../..' . '/Classes/Users.php',
     );
 
