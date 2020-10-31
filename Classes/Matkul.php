@@ -4,20 +4,23 @@ namespace Classes;
 
 use Classes\Controller;
 
-class Prodi extends Controller
+class Matkul extends Controller
 {
-    protected static $table = "prodies";
+    protected static $table = "matkuls";
 
     public static function index()
     {
-        return Controller::view("prodi/index",Database::get(self::$table));
+        return Controller::view("matkul/index",Database::get(self::$table));
     }
-
+    public static function ListMatkul()
+    {
+        return Database::get(self::$table);
+    }
     public static function profile($id)
     {
         $column = "*";
         $condition = "WHERE id = ".$id;
-        return Controller::view("prodi/single",Database::get(self::$table,$column,$condition));
+        return Controller::view("matkul/single",Database::get(self::$table,$column,$condition));
     }
     public static function getForJurusan()
     {
@@ -25,7 +28,7 @@ class Prodi extends Controller
     }
     public static function create()
     {
-        return Controller::view("prodi/create");
+        return Controller::view("matkul/create");
     }
     public static function store($data)
     {
@@ -36,20 +39,20 @@ class Prodi extends Controller
     {
         $column = "*";
         $condition = "WHERE id = ".$id;
-        return Controller::view("prodi/edit", Database::get(self::$table,$column,$condition));
+        return Controller::view("matkul/edit", Database::get(self::$table,$column,$condition));
     }
 
     public static function update($data,$id)
     {
         $condition = "WHERE id = ".$id."";
-        Database::put(self::$table,$data,$condition);
+        return Database::put(self::$table,$data,$condition);
         print_r(Database::put(self::$table,$data,$condition));
-        // header("Location:". BASEPATH."prodi");
+        // header("location:". BASEPATH."matkul");
     }
 
     public static function destroy($id)
     {
-        Database::delete(self::$table,$id);
-        // header("Location:". BASEPATH."prodi");
+        return Database::delete(self::$table,$id);
+        // header("location:". BASEPATH."matkul");
     }
 }

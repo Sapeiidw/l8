@@ -6,10 +6,8 @@
             "id_member" => $_POST['id_member'],
             ];
             $cm->create($data);
-            if (isset($_SESSION['username'])) {
-                header("location: index.php?f=course_member");
-            }else {
-                header("location: index.php?f=login");
+            if (!isset($_SESSION['username'])) {
+                header("Location:". BASEPATH."login");
             }        
         }
     }

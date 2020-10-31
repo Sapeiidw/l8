@@ -1,6 +1,6 @@
 <?php 
     if (!isset($_SESSION['username'])) {
-        header("location: /pabw-oop/login");
+        header("Location:". BASEPATH."login");
     }        
 ?>
 <div class="container d-flex justify-content-center align-items-center">

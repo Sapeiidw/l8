@@ -8,8 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'Classes\\Auth' => $baseDir . '/Classes/Auth.php',
     'Classes\\Controller' => $baseDir . '/Classes/Controller.php',
+    'Classes\\Course' => $baseDir . '/Classes/Course.php',
     'Classes\\Database' => $baseDir . '/Classes/Database.php',
     'Classes\\Departement' => $baseDir . '/Classes/Departement.php',
+    'Classes\\Matkul' => $baseDir . '/Classes/Matkul.php',
     'Classes\\Prodi' => $baseDir . '/Classes/Prodi.php',
     'Classes\\Users' => $baseDir . '/Classes/Users.php',
 );

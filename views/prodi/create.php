@@ -2,11 +2,11 @@
 
 use Classes\Departement;
     if (!isset($_SESSION['username'])) {
-        header("location: /pabw-oop/login");
+        header("Location:". BASEPATH."login");
     }     
 ?>
 <div class="container d-flex justify-content-center align-items-center">
-<form action="?f=prodi&&action=create" method="post" class="form-group col-5">
+<form action="<?=  BASEPATH."prodi/create"?>" method="post" class="form-group col-5">
     <div class="form-group">
         <label for="id_departement">Departement</label>
         <select name="id_departement" class="custom-select">

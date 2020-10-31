@@ -51,9 +51,13 @@ class Database
         $stmt->execute();
         return $stmt;
     }
-    public static function delete($table,$id)
-    {
-        $sql = "DELETE FROM $table WHERE id = '$id' ";
+    public static function delete($table,$id,$condition = NULL)
+    {   
+        if ($condition != NULL) {
+            $sql = "DELETE FROM $table $condition";
+        } else {
+            $sql = "DELETE FROM $table WHERE id = '$id' ";   
+        }        
         $stmt = self::__consturct()->query($sql);
         $stmt->execute();
         return $stmt;

@@ -22,6 +22,8 @@
       <li class="nav-item"><a class="nav-link" href="/pabw-oop/departement" >departement</a></li>
       <li class="nav-item"><a class="nav-link" href="/pabw-oop/prodi" >prodi</a></li>
       <li class="nav-item"><a class="nav-link" href="/pabw-oop/matkul" >matkul</a></li>
+      <li class="nav-item"><a class="nav-link" href="/pabw-oop/course" >course</a></li>
+      
     </ul>
     
   </div>

@@ -24,6 +24,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Classes\Auth;
 use Classes\Prodi;
 use Classes\Users;
+use Classes\Course;
+use Classes\Matkul;
 use Steampixel\Route;
 use Classes\Departement;
 
@@ -124,6 +126,65 @@ Route::add('/prodi/([0-9]*)/edit', function($id) {
         'name' => $_POST['name'],
     ];
     Prodi::update($data,$_POST['id']);
+  }
+  },["get","post"]);  
+
+// matkul
+Route::add('/matkul', function() { Matkul::index();});
+Route::add('/matkul/create', function() {
+  Matkul::create();
+  if (!empty($_POST['kode']) && !empty($_POST['name']) && !empty($_POST['sks']) && !empty($_POST['semester']) ) {
+    $data = [
+    "kode" => $_POST['kode'],
+    "name" => $_POST['name'],
+    "sks" => $_POST['sks'],
+    "semester" => $_POST['semester'],
+    // "prasyarat" => $_POST['prasyarat'],
+    ];
+    Matkul::store($data);
+  }
+  },["get","post"]);
+Route::add('/matkul/([0-9]*)', function($id) { Matkul::profile($id); });
+Route::add('/matkul/([0-9]*)/delete', function($id) { Matkul::destroy($id); });
+Route::add('/matkul/([0-9]*)/edit', function($id) {  
+  Matkul::edit($id);
+  if (!empty($_POST['kode']) && !empty($_POST['name']) && !empty($_POST['sks']) && !empty($_POST['semester']) ) {
+    $data = [
+    "kode" => $_POST['kode'],
+    "name" => $_POST['name'],
+    "sks" => $_POST['sks'],
+    "semester" => $_POST['semester'],
+    // "prasyarat" => $_POST['prasyarat'],
+    ];
+    Matkul::update($data,$_POST['id']);
+  }
+  },["get","post"]);  
+
+// course
+Route::add('/course', function() { Course::index();});
+Route::add('/course/create', function() {
+  Course::create();
+  if (!empty($_POST['id_user']) && !empty($_POST['name']) && !empty($_POST['id_matkul']) ) {
+    $data = [
+    "name" => $_POST['name'],
+    "id_matkul" => $_POST['id_matkul'],
+    "id_user" => $_POST['id_user'],
+    ];
+    Course::store($data);
+  }
+  },["get","post"]);
+Route::add('/course/([0-9]*)', function($id) { Course::profile($id); });
+Route::add('/course/([0-9]*)/delete', function($id) { Course::destroy($id); });
+Route::add('/course/([0-9]*)/edit', function($id) {  
+  Course::edit($id);
+  if (!empty($_POST['id_user']) && !empty($_POST['name']) && !empty($_POST['id_matkul']) ) {
+    $data = [
+    "name" => $_POST['name'],
+    "id_matkul" => $_POST['id_matkul'],
+    "id_user" => $_POST['id_user'],
+    ];
+    Course::update($data,$_POST['id']);
+    // header("location:". BASEPATH."course");
   }
   },["get","post"]);  
 

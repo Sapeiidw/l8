@@ -4,20 +4,23 @@ namespace Classes;
 
 use Classes\Controller;
 
-class Prodi extends Controller
+class Course extends Controller
 {
-    protected static $table = "prodies";
+    protected static $table = "courses";
 
     public static function index()
     {
-        return Controller::view("prodi/index",Database::get(self::$table));
+        return Controller::view("course/index",Database::get(self::$table));
     }
-
+    public static function ListCourse()
+    {
+        return Database::get(self::$table);
+    }
     public static function profile($id)
     {
         $column = "*";
         $condition = "WHERE id = ".$id;
-        return Controller::view("prodi/single",Database::get(self::$table,$column,$condition));
+        return Controller::view("course/single",Database::get(self::$table,$column,$condition));
     }
     public static function getForJurusan()
     {
@@ -25,7 +28,7 @@ class Prodi extends Controller
     }
     public static function create()
     {
-        return Controller::view("prodi/create");
+        return Controller::view("course/create");
     }
     public static function store($data)
     {
@@ -36,20 +39,20 @@ class Prodi extends Controller
     {
         $column = "*";
         $condition = "WHERE id = ".$id;
-        return Controller::view("prodi/edit", Database::get(self::$table,$column,$condition));
+        return Controller::view("course/edit", Database::get(self::$table,$column,$condition));
     }
 
     public static function update($data,$id)
     {
         $condition = "WHERE id = ".$id."";
-        Database::put(self::$table,$data,$condition);
+        return Database::put(self::$table,$data,$condition);
         print_r(Database::put(self::$table,$data,$condition));
-        // header("Location:". BASEPATH."prodi");
+        // header("location:". BASEPATH."course");
     }
 
     public static function destroy($id)
     {
-        Database::delete(self::$table,$id);
-        // header("Location:". BASEPATH."prodi");
+        return Database::delete(self::$table,$id);
+        // header("location:". BASEPATH."course");
     }
 }

@@ -12,7 +12,10 @@ class Users extends Controller
     {
         return Controller::view("user/index",Database::get(self::$table));
     }
-
+    public static function ListUsers()
+    {
+        return Database::get(self::$table);
+    }
     public static function profile($id)
     {
         $column = "*";
@@ -57,14 +60,14 @@ class Users extends Controller
     public static function update($data,$id)
     {
         $condition = "WHERE id = ".$id."";
-        Database::put(self::$table,$data,$condition);
+        return Database::put(self::$table,$data,$condition);
         print_r(Database::put(self::$table,$data,$condition));
-        header("location: /pabw-oop/user");
+        // header("location:". BASEPATH."user");
     }
 
     public static function destroy($id)
     {
-        Database::delete(self::$table,$id);
-        header("location: /pabw-oop/user");
+        return Database::delete(self::$table,$id);
+        // header("location:". BASEPATH."user");
     }
 }
