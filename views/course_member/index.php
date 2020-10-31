@@ -1,3 +1,4 @@
+
 <div class="card">
     <div class="card-header">
         course
@@ -14,15 +15,17 @@
 
             <tbody>
                 <?php
-                    foreach ($cm->index() as $data) {
+                    foreach ($data as $member) {
                         echo '
                         <tr>
-                        <td>'.$data["id"].'</td>
-                        <td>'.$data["id_courses"].'</td>
-                        <td>'.$data["id_member"].'</td>
+                        <td>'.$member["id"].'</td>
+                        <td>'.$member["id_courses"].'</td>
+                        <td>'.$member["id_member"].'</td>
+                        <td>'.$member["username"].'</td>
+                        <td>'.$member["email"].'</td>
                         <td>
-                            <a href="index.php?f=course_member&&action=edit&&param='.$data['id'].'" class="btn btn-sm btn-primary">edit</a>
-                            <a href="index.php?f=course_member&&action=delete&&param='.$data['id'].'" class="btn btn-sm btn-danger">delete</a>
+                            <a href="'.BASEPATH.'course-member/'.$member['id'].'/edit" class="btn btn-sm btn-primary">edit</a>
+                            <a href="'.BASEPATH.'course-member/'.$member['id'].'/delete" class="btn btn-sm btn-danger">delete</a>
                         </td>
                         </tr>
                         ';

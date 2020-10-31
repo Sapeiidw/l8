@@ -29,7 +29,7 @@ class Users extends Controller
         $conditioin = "WHERE email = '$email' and password = '$password' ";
         $query = Database::get("users","*",$conditioin);
         if (!$query) {
-            die("The data not found");
+            die(Alert::warning("login","wrong email or password!!"));
         } else {
             foreach ($query as $data) {
                 $_SESSION['id'] = $data['id'];
@@ -61,13 +61,10 @@ class Users extends Controller
     {
         $condition = "WHERE id = ".$id."";
         return Database::put(self::$table,$data,$condition);
-        print_r(Database::put(self::$table,$data,$condition));
-        // header("location:". BASEPATH."user");
     }
 
     public static function destroy($id)
     {
         return Database::delete(self::$table,$id);
-        // header("location:". BASEPATH."user");
     }
 }

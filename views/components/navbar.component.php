@@ -23,6 +23,7 @@
       <li class="nav-item"><a class="nav-link" href="<?= BASEPATH ?>prodi" >prodi</a></li>
       <li class="nav-item"><a class="nav-link" href="<?= BASEPATH ?>matkul" >matkul</a></li>
       <li class="nav-item"><a class="nav-link" href="<?= BASEPATH ?>course" >course</a></li>
+      <li class="nav-item"><a class="nav-link" href="<?= BASEPATH ?>assignment" >assignment</a></li>
       
     </ul>
     

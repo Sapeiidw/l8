@@ -41,14 +41,11 @@ class Departement extends Controller
     public static function update($data,$id)
     {
         $condition = "WHERE id = ".$id."";
-        Database::put(self::$table,$data,$condition);
-        print_r(Database::put(self::$table,$data,$condition));
-        // header("Location:". BASEPATH."departement");
+        return Database::put(self::$table,$data,$condition);
     }
 
     public static function destroy($id)
     {
-        Database::delete(self::$table,$id);
-        // header("Location:". BASEPATH."departement");
+        return Database::delete(self::$table,$id);
     }
 }

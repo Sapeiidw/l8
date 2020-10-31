@@ -6,9 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Classes\\Alert' => $baseDir . '/Classes/Alert.php',
+    'Classes\\Assignment' => $baseDir . '/Classes/Assignment.php',
     'Classes\\Auth' => $baseDir . '/Classes/Auth.php',
     'Classes\\Controller' => $baseDir . '/Classes/Controller.php',
     'Classes\\Course' => $baseDir . '/Classes/Course.php',
+    'Classes\\CourseMember' => $baseDir . '/Classes/CourseMember.php',
     'Classes\\Database' => $baseDir . '/Classes/Database.php',
     'Classes\\Departement' => $baseDir . '/Classes/Departement.php',
     'Classes\\Matkul' => $baseDir . '/Classes/Matkul.php',

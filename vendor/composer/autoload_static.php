@@ -17,9 +17,12 @@ class ComposerStaticInit48fa63fcded015e00366952f8c51ba8f
     );
 
     public static $classMap = array (
+        'Classes\\Alert' => __DIR__ . '/../..' . '/Classes/Alert.php',
+        'Classes\\Assignment' => __DIR__ . '/../..' . '/Classes/Assignment.php',
         'Classes\\Auth' => __DIR__ . '/../..' . '/Classes/Auth.php',
         'Classes\\Controller' => __DIR__ . '/../..' . '/Classes/Controller.php',
         'Classes\\Course' => __DIR__ . '/../..' . '/Classes/Course.php',
+        'Classes\\CourseMember' => __DIR__ . '/../..' . '/Classes/CourseMember.php',
         'Classes\\Database' => __DIR__ . '/../..' . '/Classes/Database.php',
         'Classes\\Departement' => __DIR__ . '/../..' . '/Classes/Departement.php',
         'Classes\\Matkul' => __DIR__ . '/../..' . '/Classes/Matkul.php',

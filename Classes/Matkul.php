@@ -46,13 +46,10 @@ class Matkul extends Controller
     {
         $condition = "WHERE id = ".$id."";
         return Database::put(self::$table,$data,$condition);
-        print_r(Database::put(self::$table,$data,$condition));
-        // header("location:". BASEPATH."matkul");
     }
 
     public static function destroy($id)
     {
         return Database::delete(self::$table,$id);
-        // header("location:". BASEPATH."matkul");
     }
 }
