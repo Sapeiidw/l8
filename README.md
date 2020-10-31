@@ -1,4 +1,4 @@
-# Tugas PABW OOP | Kelompok ( Lupa kelompok berapa hehe )
+# Tugas PABW OOP | Kelompok 5.
 ## Anggota
 	1. Abi Ichsan Ramadhan 	- 11181002
 	2. Andhika Setiawan 	- 11181009
