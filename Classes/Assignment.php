@@ -8,7 +8,7 @@ class Assignment extends Controller
 {
     protected static $table = "assignments";
     protected static $column = " assignments.id,assignments.id_course,assignments.name,deskripsi,assignments.deadline, courses.id_user ";
-
+    protected static $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` ";
     public static function index($id)
     {
         $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE assignments.id_course = ".$id;
@@ -16,13 +16,11 @@ class Assignment extends Controller
     }
     public static function profile($id)
     {
-        $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE assignments.id = ".$id;
-        return Controller::view("assignment/single",Database::get(self::$table,self::$column,$condition));
+        return Controller::view("assignment/single",Database::get(self::$table,self::$column,self::$condition." WHERE assignments.id = ".$id));
     }
     public static function getProfile($id)
     {
-        $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE assignments.id = ".$id;
-        return Database::get(self::$table,self::$column,$condition);
+        return Database::get(self::$table,self::$column,self::$condition." WHERE assignments.id = ".$id);
     }
     public static function getForJurusan()
     {
@@ -36,19 +34,15 @@ class Assignment extends Controller
     {
         return Database::insert(self::$table, $data);
     }
-
     public static function edit($id)
     {
-        $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE assignments.id = ".$id;
-        return Controller::view("assignment/edit", Database::get(self::$table,self::$column,$condition));
+        return Controller::view("assignment/edit", Database::get(self::$table,self::$column,self::$condition)." WHERE assignments.id = ".$id);
     }
-
     public static function update($data,$id)
     {
         $condition = "WHERE id = ".$id."";
         return Database::put(self::$table,$data,$condition);
     }
-
     public static function destroy($id)
     {
         return Database::delete(self::$table,$id);

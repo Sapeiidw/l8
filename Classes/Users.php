@@ -39,7 +39,6 @@ class Users extends Controller
             }
             return $query;
         }
-        
     }
     public static function register()
     {

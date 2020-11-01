@@ -18,21 +18,13 @@ class Auth extends Controller
     {
         return Controller::view("user/logout");
     }
-    public static function MakeSession($key,$value)
-    {
-        // $_SESSION['id'] = $data['id'];
-        // $_SESSION['username'] = $data['username'];
-        // $_SESSION['email'] = $data['email'];
-        // $_SESSION['role'] = $data['role'];
-    }
     public static function isLogin()
     {
         if (isset($_SESSION['username'])) {
             return true;
         } else {
-            return false;
+            header("Location: http://localhost/pabw-oop/login");
         }
-        
     }
     public static function adminOnly()
     {

@@ -9,14 +9,13 @@ use Classes\Prodi;
         <a href="<?= BASEPATH."departement/create"?>" class="btn btn-primary btn-sm d-inline">Create</a>
     </div>
     <div class="card-body bg-light">
-        <div class="container">
+        
             <div class="row">
             <?php
                 foreach ($data as $departement) {
                     echo '     
-                    <div class="col-md-4 mb-5">
-                        <div class="card" style="width: 20rem; height:100%;">
-                            <img class="card-img-top" src="https://image.freepik.com/free-vector/colorful-flowers-background-flat-style_23-2148231044.jpg" alt="...">                
+                    <div class="col-md-3 mb-5">
+                        <div class="card" style="max-width: 20rem; height:100%;">
                             <div class="card-header position-relative pb-4">
                                 <a href="'.BASEPATH.'departement/'.$departement['id'].'">
                                     <h5 class="card-title">'.$departement["kode"].'</h5>
@@ -75,5 +74,4 @@ use Classes\Prodi;
             </div>
         </div>
     </div>
-    
 </div>

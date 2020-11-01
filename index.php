@@ -38,7 +38,10 @@ use Classes\CourseMember;
 // Define a global basepath
 define('BASEPATH','/pabw-oop/');
 
-include_once 'views/components/navbar.component.php';
+if (isset($_SESSION['username'])) {
+  include_once 'views/components/navbar.component.php';
+}
+
 
 Route::add('/',function() {include_once 'views/index.php';});
 // auth
@@ -171,7 +174,7 @@ Route::add('/matkul/([0-9]*)/delete', function($id) {
   if(Matkul::destroy($id)){
     Alert::deleted("matkul");
   }; 
-});
+  });
 Route::add('/matkul/([0-9]*)/edit', function($id) {  
   Matkul::edit($id);
   if (!empty($_POST['kode']) && !empty($_POST['name']) && !empty($_POST['sks']) && !empty($_POST['semester']) ) {
