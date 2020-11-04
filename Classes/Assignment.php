@@ -7,11 +7,11 @@ use Classes\Controller;
 class Assignment extends Controller
 {
     protected static $table = "assignments";
-    protected static $column = " assignments.id,assignments.id_course,assignments.name,deskripsi,assignments.deadline, courses.id_user ";
+    protected static $column = " `assignments`.`id`,`assignments`.`id_course`,`assignments`.`name`,`assignments`.`deskripsi`,`assignments`.`deadline`, `courses`.`id_user` ";
     protected static $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` ";
     public static function index($id)
     {
-        $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE assignments.id_course = ".$id;
+        $condition = " JOIN `courses` ON `courses`.`id`=`assignments`.`id_course` WHERE `assignments`.`id_course` = ".$id;
         return Controller::view("assignment/index",Database::get(self::$table,self::$column,$condition));
     }
     public static function profile($id)

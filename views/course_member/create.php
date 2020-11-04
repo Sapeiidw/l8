@@ -9,7 +9,7 @@ use Classes\Course;
     <div class="card-header">join Course</div>
     <div class="card-body">
         <div class="container d-flex justify-content-center align-items-center">
-        <form action="<?= BASEPATH."course-member/create" ?>" method="post" class="form-group col-5">
+        <form action="<?= BASEPATH."course/join" ?>" method="post" class="form-group col-5">
             <div class="form-group">
                 <label for="id_courses">courses</label>
                 <select name="id_courses" class="custom-select">

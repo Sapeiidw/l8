@@ -1,21 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">
-  <!-- jQuery and JS bundle w/ Popper.js -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.all.min.js" integrity="sha256-/Rc4sUX9+MU4xfVQSuqa0Uv4PADrKTMURNa1Sh5T0X4=" crossorigin="anonymous"></script>
-  <title>Document</title>
-</head>
-<body>
-  
 <?php
-
 session_start();
 
 // Autoload files using composer
@@ -38,6 +21,26 @@ use Classes\CourseMember;
 // Define a global basepath
 define('BASEPATH','/pabw-oop/');
 
+$padding = (isset($_SESSION['username'])) ? 'style="padding-top:72px"' : "" ;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">
+  <!-- jQuery and JS bundle w/ Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.all.min.js" integrity="sha256-/Rc4sUX9+MU4xfVQSuqa0Uv4PADrKTMURNa1Sh5T0X4=" crossorigin="anonymous"></script>
+  <title>Document</title>
+</head>
+<body <?= $padding ?>>
+  
+<?php
 if (isset($_SESSION['username'])) {
   include_once 'views/components/navbar.component.php';
 }
@@ -53,7 +56,11 @@ Route::add('/register', function() {
         'email' => $_POST['email'],
         'password' => $_POST['password']
     ];
-    Users::create($data);
+    if (Users::create($data)) {
+      if(!isset($_SESSION['username'])) {
+        header("Location: ".BASEPATH."login");
+      };
+    };
   }
   },["get","post"]);
 Route::add('/login', function() {
@@ -77,7 +84,7 @@ Route::add('/user/([0-9]*)/delete', function($id) {
   if(Users::destroy($id)){
     Alert::deleted("user");
   };
-});
+  });
 Route::add('/user/([0-9]*)/edit', function($id) {  
   Users::edit($id);
   if (!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
@@ -109,7 +116,7 @@ Route::add('/departement/([0-9]*)/delete', function($id) {
   if(Departement::destroy($id)){
     Alert::deleted("departement");
   };
-});
+  });
 Route::add('/departement/([0-9]*)/edit', function($id) {  
   Departement::edit($id);
   if (!empty($_POST['name']) && !empty($_POST['kode'])) {
@@ -192,8 +199,14 @@ Route::add('/matkul/([0-9]*)/edit', function($id) {
   },["get","post"]);  
 
 // course
-Route::add('/course', function() { Course::index();});
-Route::add('/course/my/([0-9]*)', function($id) { Course::getForUser($id);});
+Route::add('/course', function() { 
+  if ($_SESSION['role'] == "admin" AND isset($_SESSION['id'])) {
+    Course::index();
+  } else {
+    $id = $_SESSION['id'];
+    Course::getForUser($id);
+  }
+  });
 Route::add('/course/create', function() {
   Course::create();
   if (!empty($_POST['id_user']) && !empty($_POST['name']) && !empty($_POST['id_matkul']) ) {
@@ -227,9 +240,8 @@ Route::add('/course/([0-9]*)/edit', function($id) {
   },["get","post"]);  
 
 // course member
-// Route::add('/course', function() { CourseMember::index();});
 Route::add('/course/([0-9]*)/member', function($id) { CourseMember::index($id);});
-Route::add('/course-member/create', function() {
+Route::add('/course/join', function() {
   CourseMember::create();
   if (!empty($_POST['id_courses']) && !empty($_SESSION['id']) ) {
     $data = [
@@ -239,7 +251,7 @@ Route::add('/course-member/create', function() {
     CourseMember::store($data);
   }
   },["get","post"]);
-// Route::add('/course/([0-9]*)', function($id) { CourseMember::profile($id); });
+
 Route::add('/course-member/([0-9]*)/delete', function($id) { 
   
   if(CourseMember::destroy($id)){
@@ -270,7 +282,9 @@ Route::add('/course/([0-9]*)/assignment/create', function($id) {
       "deskripsi" => $_POST['deskripsi'],
       "deadline" => $_POST['deadline'],
     ];
-    Assignment::store($data);
+    if(Assignment::store($data)){
+      Alert::success("course/".$_POST['id_course']);
+    };
   }else{
     die("gk boleh kosong");
   }

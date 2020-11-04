@@ -8,15 +8,15 @@ use Classes\Prodi;
         Departement
         <a href="<?= BASEPATH."departement/create"?>" class="btn btn-primary btn-sm d-inline">Create</a>
     </div>
-    <div class="card-body bg-light">
+    <div class="card-body bg-white">
         
             <div class="row">
             <?php
                 foreach ($data as $departement) {
                     echo '     
                     <div class="col-md-3 mb-5">
-                        <div class="card" style="max-width: 20rem; height:100%;">
-                            <div class="card-header position-relative pb-4">
+                        <div class="card overflow-hidden shadow-sm rounded" style="max-width: 20rem; height:100%;">
+                            <div class="card-header position-relative pb-4" style="">
                                 <a href="'.BASEPATH.'departement/'.$departement['id'].'">
                                     <h5 class="card-title">'.$departement["kode"].'</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">'.$departement["name"].'</h6>

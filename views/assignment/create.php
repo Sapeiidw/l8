@@ -10,7 +10,7 @@ use Classes\Course;
         if ($_SESSION['id'] == $course['id_user']) {
 ?>
 <div class="container d-flex justify-content-center align-items-center">
-<form action="<?=  BASEPATH."course/".$course['id']."/assignment"?>" method="post" class="form-group col-5">
+<form action="<?=  BASEPATH."course/".$course['id']."/assignment/create"?>" method="post" class="form-group col-5">
     <input type="hidden" name="id_course" value="<?= $course['id'] ?>">
     <div class="form-group">
         <label for="name">name</label>

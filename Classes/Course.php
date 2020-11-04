@@ -29,7 +29,7 @@ class Course extends Controller
     public static function getForUser($id)
     {
 
-        return Controller::view("course/my",Database::get(self::$table,self::$column." ,`courses_members`.`id` AS `member_id` ",self::$condition." JOIN `courses_members` ON `courses_members`.`id_courses` = `courses`.`id`  WHERE `courses_members`.`id_member` =".$id));
+        return Controller::view("course/index",Database::get(self::$table,self::$column." ,`courses_members`.`id` AS `member_id` ",self::$condition." JOIN `courses_members` ON `courses_members`.`id_courses` = `courses`.`id`  WHERE `courses_members`.`id_member` =".$id));
     }
     public static function create()
     {
@@ -51,14 +51,11 @@ class Course extends Controller
     {
         $condition = "WHERE id = ".$id."";
         return Database::put(self::$table,$data,$condition);
-        // print_r(Database::put(self::$table,$data,$condition));
-        // header("location:". BASEPATH."course");
     }
 
     public static function destroy($id)
     {
         return Database::delete(self::$table,$id);
-        // header("location:". BASEPATH."course");
     }
 }
 
