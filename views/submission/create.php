@@ -9,7 +9,7 @@ use Classes\Assignment;
         if ($_SESSION['id'] != $assignment['id_user']) {
 ?>
 <div class="container d-flex justify-content-center align-items-center">
-<form action="<?=  BASEPATH."assignment/".$assignment['id']."/create"?>" method="post" class="form-group col-5">
+<form action="<?=  BASEPATH."course/".$assignment['id_course']."/assignment/".$assignment['id']."/create"?>" method="post" class="form-group col-5">
     <input type="hidden" name="id_course" value="<?= $assignment['id'] ?>">
     <div class="form-group">
         <label for="name">name</label>

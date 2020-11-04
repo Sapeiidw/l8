@@ -71,7 +71,7 @@ Route::add('/login', function() {
         'password' => $_POST['password']
     ];
     if(Users::login($data)){
-      Alert::success("login");
+      Alert::success("course");
     } 
   }
   },["get","post"]);
@@ -289,14 +289,14 @@ Route::add('/course/([0-9]*)/assignment/create', function($id) {
     die("gk boleh kosong");
   }
   },["get","post"]);
-Route::add('/assignment/([0-9]*)', function($id) { Assignment::profile($id); });
-Route::add('/assignment/([0-9]*)/delete', function($id) { 
+Route::add('/course/([0-9]*)/assignment/([0-9]*)', function($course,$id) { Assignment::profile($course,$id); });
+Route::add('/course/([0-9]*)/assignment/([0-9]*)/delete', function($course,$id) { 
   if(Assignment::destroy($id)){
-    Alert::deleted("course");
+    Alert::deleted("course/".$course);
     // header("Location: localhost/".BASEPATH."course");
   };
   });
-Route::add('/assignment/([0-9]*)/edit', function($id) {  
+Route::add('/course/([0-9]*)/assignment/([0-9]*)/edit', function($course,$id) {  
   Assignment::edit($id);
   if (!empty($_POST['name']) && !empty($_POST['deskripsi']) && !empty($_POST['deadline']) && !empty($_POST['id_course'])) {
     $data = [
@@ -305,19 +305,14 @@ Route::add('/assignment/([0-9]*)/edit', function($id) {
       "deskripsi" => $_POST['deskripsi'],
       "deadline" => $_POST['deadline'],
     ];
-    Assignment::store($data);
-  
     if(Assignment::update($data,$_POST['id'])){
-      Alert::updated("course");
-      // header("Location: localhost/".BASEPATH."course");
+      Alert::updated("course/".$course);
     } 
-  }else{
-    die("gk boleh kosong");
-  } 
+  }
   },["get","post"]);  
 
 // submission
-Route::add('/assignment/([0-9]*)/create', function($id) {
+Route::add('/course/([0-9]*)/assignment/([0-9]*)/create', function($course,$id) {
   Submission::create($id);
   if (!empty($_POST['name']) && !empty($id) && !empty($_SESSION['id'])) {
     $data = [
@@ -328,9 +323,10 @@ Route::add('/assignment/([0-9]*)/create', function($id) {
     Submission::store($data);
   }else{
     die("gk boleh kosong");
+    Alert::warning("gk boleh kosong");
   }
   },["get","post"]);
-Route::add('/assignment/([0-9]*)/submission', function($id) { Submission::index($id); });
+Route::add('/course/([0-9]*)/assignment/([0-9]*)/submission', function($course,$id) { Submission::index($id); });
 Route::add('/submission/([0-9]*)/delete', function($id) { 
   if(Assignment::destroy($id)){
     Alert::deleted("course");

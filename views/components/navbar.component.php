@@ -38,10 +38,10 @@
           }
         ?>
         <div class="dropdown-menu text-center p-3 shadow-sm" aria-labelledby="navbarDropdown" style="right: 0;left: auto !important;min-width:250px;">
-          <div class="alert alert-primary text-small py-3">
-            <img src="https://ui-avatars.com/api/?name=<?= $_SESSION['username'] ?>" alt="" srcset="" class="rounded">
+          <div class="alert alert-danger text-small py-3">
+            <img src="https://ui-avatars.com/api/?name=<?= $_SESSION['username'] ?>" alt="" srcset="" class="rounded-circle">
           </div>
-          <h5 class="title font-weight-bold"><?= $_SESSION['username'] ?></h5>
+          <a href="<?= BASEPATH.'user/'.$_SESSION['id'] ?>"><h5 class="title font-weight-bold"><?= $_SESSION['username'] ?></h5></a>
           <p class="subtitle text-secondary"><?= $_SESSION['email'] ?></p>
             <a href="" class="my-4 px-4 p-2 dropdown-item btn btn-outline-secondary rounded-pill">Manage your Account</a>
             <a class="dropdown-item bg-danger text-white p-2" href="<?= BASEPATH ?>logout">Logout</a>
