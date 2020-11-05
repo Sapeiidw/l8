@@ -275,18 +275,16 @@ Route::add('/course-member/([0-9]*)/edit', function($id) {
 Route::add('/course/([0-9]*)/assignment', function($id) { Assignment::index($id);});
 Route::add('/course/([0-9]*)/assignment/create', function($id) {
   Assignment::create($id);
-  if (!empty($_POST['name']) && !empty($_POST['deskripsi']) && !empty($_POST['deadline']) && !empty($_POST['id_course'])) {
+  if (!empty($_POST['name']) && !empty($_POST['deskripsi']) && !empty($_POST['deadline']) ) {
     $data = [
-      "id_course" => $_POST['id_course'],
+      "id_course" => $id,
       "name" => $_POST['name'],
       "deskripsi" => $_POST['deskripsi'],
       "deadline" => $_POST['deadline'],
     ];
     if(Assignment::store($data)){
-      Alert::success("course/".$_POST['id_course']);
+      Alert::success("course/".$id);
     };
-  }else{
-    die("gk boleh kosong");
   }
   },["get","post"]);
 Route::add('/course/([0-9]*)/assignment/([0-9]*)', function($course,$id) { Assignment::profile($course,$id); });
