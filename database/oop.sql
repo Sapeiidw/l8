@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 31, 2020 at 01:34 PM
+-- Generation Time: Nov 05, 2020 at 06:02 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -30,11 +30,20 @@ SET time_zone = "+00:00";
 CREATE TABLE `assignments` (
   `id` int(10) NOT NULL,
   `id_course` int(10) NOT NULL,
-  `status` varchar(50) NOT NULL DEFAULT 'undgraded',
+  `status` varchar(50) NOT NULL DEFAULT 'open',
   `name` varchar(50) NOT NULL,
+  `deskripsi` text NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deadline` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `assignments`
+--
+
+INSERT INTO `assignments` (`id`, `id_course`, `status`, `name`, `deskripsi`, `create_at`, `deadline`) VALUES
+(14, 15, 'open', 'Mantap Soul', 'Mantap Soul', '2020-11-04 14:39:10', '2019-10-03 00:00:00'),
+(16, 15, 'open', 'Tugas 1', 'merancang sebuah aplikasi menggunakan struktur data', '2020-11-05 04:19:19', '2019-10-04 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -55,10 +64,11 @@ CREATE TABLE `courses` (
 
 INSERT INTO `courses` (`id`, `id_matkul`, `id_user`, `name`) VALUES
 (1, 3, 1, 'Struktur Data A '),
-(2, 3, 1, 'Struktur Data B'),
 (3, 3, 1, 'Struktur Data C'),
 (8, 3, 1, 'Struktur Data D'),
-(13, 26, 11, 'Matkul 1 C');
+(13, 26, 11, 'Matkul 1 C'),
+(14, 3, 1, 'Struktur Data B'),
+(15, 3, 7, 'Struktur Data Nana');
 
 -- --------------------------------------------------------
 
@@ -79,12 +89,13 @@ CREATE TABLE `courses_members` (
 
 INSERT INTO `courses_members` (`id`, `id_courses`, `id_member`, `created_at`) VALUES
 (1, 1, 1, '2020-10-26 13:29:38'),
-(2, 2, 1, '2020-10-26 13:29:38'),
 (9, 1, 7, '2020-10-31 08:28:36'),
 (10, 1, 12, '2020-10-31 08:28:36'),
 (11, 8, 7, '2020-10-31 09:00:46'),
 (14, 1, 11, '2020-10-31 11:55:21'),
-(15, 2, 11, '2020-10-31 11:55:29');
+(21, 14, 20, '2020-11-01 10:55:37'),
+(22, 15, 7, '2020-11-04 11:38:41'),
+(23, 15, 12, '2020-11-04 11:40:10');
 
 -- --------------------------------------------------------
 
@@ -175,23 +186,24 @@ INSERT INTO `prodies` (`id`, `id_departement`, `name`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Table structure for table `submissions`
 --
 
-CREATE TABLE `roles` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
+CREATE TABLE `submissions` (
+  `id` int(10) NOT NULL,
+  `id_assignment` int(10) NOT NULL,
+  `id_user` int(10) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'ungraded',
+  `create_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `roles`
+-- Dumping data for table `submissions`
 --
 
-INSERT INTO `roles` (`id`, `name`) VALUES
-(2, 'admin'),
-(4, 'lonte'),
-(3, 'owner'),
-(1, 'user');
+INSERT INTO `submissions` (`id`, `id_assignment`, `id_user`, `name`, `status`, `create_at`) VALUES
+(5, 14, 12, 'Tugas 1 Nana', '100', '2020-11-04 14:59:49');
 
 -- --------------------------------------------------------
 
@@ -219,7 +231,9 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`
 (7, 'nana', 'nana@gmail.com', 'nana', 'user', '2020-10-29 15:23:16'),
 (11, 'milo', 'milo@gmail.com', 'milo', 'user', '2020-10-29 15:28:31'),
 (12, 'mila', 'mila@gmail.com', 'mila', 'user', '2020-10-29 15:28:31'),
-(17, 'register', 'register@gmail.com', 'register', 'user', '2020-10-30 04:52:47');
+(17, 'register', 'register@gmail.com', 'register', 'user', '2020-10-30 04:52:47'),
+(19, 'flash', 'flash@gmail.com', 'flash', 'user', '2020-11-01 06:04:09'),
+(20, 'nanti', 'nanti@gmail.com', 'nanti', 'user', '2020-11-01 08:32:54');
 
 --
 -- Indexes for dumped tables
@@ -272,11 +286,12 @@ ALTER TABLE `prodies`
   ADD KEY `id_departement` (`id_departement`);
 
 --
--- Indexes for table `roles`
+-- Indexes for table `submissions`
 --
-ALTER TABLE `roles`
+ALTER TABLE `submissions`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+  ADD KEY `id_assignment` (`id_assignment`),
+  ADD KEY `id_user` (`id_user`);
 
 --
 -- Indexes for table `users`
@@ -293,19 +308,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `courses_members`
 --
 ALTER TABLE `courses_members`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `departements`
@@ -326,16 +341,16 @@ ALTER TABLE `prodies`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT for table `submissions`
 --
-ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `submissions`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
@@ -366,6 +381,13 @@ ALTER TABLE `courses_members`
 --
 ALTER TABLE `prodies`
   ADD CONSTRAINT `prodies_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departements` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `submissions`
+--
+ALTER TABLE `submissions`
+  ADD CONSTRAINT `submissions_ibfk_1` FOREIGN KEY (`id_assignment`) REFERENCES `assignments` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `submissions_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
